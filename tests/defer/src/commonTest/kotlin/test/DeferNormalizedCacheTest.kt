@@ -71,7 +71,7 @@ class DeferNormalizedCacheTest {
         """{"data":{"cpu":"386","year":1993,"screen":{"__typename":"Screen","resolution":"640x480"}},"path":["computers",0],"hasNext":true}""",
         """{"data":{"isColor":false},"path":["computers",0,"screen"],"hasNext":false,"label":"a"}""",
     )
-    mockServer.enqueueMultipart(jsonList)
+    mockServer.enqueueMultipart(jsonList, chunksDelayMillis = 800)
     apolloClient.query(WithFragmentSpreadsQuery()).fetchPolicy(FetchPolicy.NetworkOnly).toFlow().collect()
     mockServer.takeRequest()
 

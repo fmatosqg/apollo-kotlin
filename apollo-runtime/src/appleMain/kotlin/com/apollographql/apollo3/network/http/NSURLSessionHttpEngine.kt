@@ -5,8 +5,8 @@ import com.apollographql.apollo3.api.http.HttpMethod
 import com.apollographql.apollo3.api.http.HttpRequest
 import com.apollographql.apollo3.api.http.HttpResponse
 import com.apollographql.apollo3.exception.ApolloNetworkException
-import com.apollographql.apollo3.mpp.assertMainThreadOnNative
 import com.apollographql.apollo3.internal.suspendAndResumeOnMain
+import com.apollographql.apollo3.mpp.assertMainThreadOnNative
 import com.apollographql.apollo3.network.toNSData
 import okio.Buffer
 import okio.toByteString
@@ -20,11 +20,15 @@ import platform.Foundation.NSURLRequestReloadIgnoringCacheData
 import platform.Foundation.NSURLResponse
 import platform.Foundation.NSURLSession
 import platform.Foundation.NSURLSessionConfiguration
+import platform.Foundation.NSURLSessionDataDelegateProtocol
 import platform.Foundation.NSURLSessionDataTask
-import platform.Foundation.dataTaskWithRequest
+import platform.Foundation.NSURLSessionResponseAllow
+import platform.Foundation.NSURLSessionResponseDisposition
+import platform.Foundation.NSURLSessionTask
 import platform.Foundation.setHTTPBody
 import platform.Foundation.setHTTPMethod
 import platform.Foundation.setValue
+import platform.darwin.NSObject
 import kotlin.native.concurrent.freeze
 
 typealias UrlSessionDataTaskCompletionHandler = (NSData?, NSURLResponse?, NSError?) -> Unit
@@ -151,9 +155,39 @@ private fun buildHttpResponse(
 }
 
 private class DefaultDataTaskFactory : DataTaskFactory {
-  private val nsurlSession = NSURLSession.sessionWithConfiguration(NSURLSessionConfiguration.defaultSessionConfiguration())
+  private val delegate = CompletionHandlerDelegate().freeze()
+
+  private val nsurlSession = NSURLSession.sessionWithConfiguration(
+      configuration = NSURLSessionConfiguration.defaultSessionConfiguration(),
+      delegate = delegate,
+      delegateQueue = null
+  )
 
   override fun dataTask(request: NSURLRequest, completionHandler: UrlSessionDataTaskCompletionHandler): NSURLSessionDataTask {
-    return nsurlSession.dataTaskWithRequest(request, completionHandler)
+    return nsurlSession.dataTaskWithRequest(request)
+  }
+}
+
+private class CompletionHandlerDelegate() : NSObject(), NSURLSessionDataDelegateProtocol {
+  override fun URLSession(
+      session: NSURLSession,
+      dataTask: NSURLSessionDataTask,
+      didReceiveResponse: NSURLResponse,
+      completionHandler: (NSURLSessionResponseDisposition) -> Unit,
+  ) {
+    println("XXX didReceiveResponse=$didReceiveResponse mimetype=${didReceiveResponse.MIMEType}")
+    completionHandler(NSURLSessionResponseAllow)
+  }
+
+  override fun URLSession(
+      session: NSURLSession,
+      dataTask: NSURLSessionDataTask,
+      didReceiveData: NSData,
+  ) {
+    println("XXX didReceiveData=${didReceiveData.toByteString().utf8()}")
+  }
+
+  override fun URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError: NSError?) {
+    println("XXX didCompleteWithError=$didCompleteWithError")
   }
 }
