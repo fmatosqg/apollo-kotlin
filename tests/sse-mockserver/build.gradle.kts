@@ -16,8 +16,8 @@ dependencies {
   implementation(groovy.util.Eval.x(project, "x.dep.ktor.serialization"))
   implementation(groovy.util.Eval.x(project, "x.dep.logback"))
   implementation("io.ktor:ktor-gson:1.6.7") // TODO remove all gson references
-  implementation("io.ktor:ktor-client-gson:1.6.7")
-  implementation("io.ktor:ktor-client-serialization:1.6.7")
+//  implementation("io.ktor:ktor-client-gson:1.6.7")
+//  implementation("io.ktor:ktor-client-serialization:1.6.7")
 
   ////////////////////////////
   // test

@@ -18,7 +18,6 @@ class SideChannelTest : KtorTest() {
   private val sideChannel = DefaultSideChannel(
       okHttpClient = okHttpClient,
       sideChannelUrl = sideChannelUrl + "/" + SseSideChannelRouter.SIDE_CHANNEL_PATH, // TODO do it neatly with some URL class
-      messageType = messageType
   )
 
   private val messageFactory = SseClientTransportMessageFactory(messageType = messageType)

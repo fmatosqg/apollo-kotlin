@@ -16,10 +16,6 @@ import io.ktor.gson.*
 
 open class KtorServerInteractor(private val port: Int = 8080) {
 
-  fun Application.module() {
-    log.info("Hello from module!")
-  }
-
   fun invoke() {
 
 

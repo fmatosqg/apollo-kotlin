@@ -1,7 +1,6 @@
 package com.apollographql.apollo.sample.server.sse
 
 import com.apollographql.apollo3.network.sse.SseTransportMessage
-import com.apollographql.apollo3.network.sse.SseClientTransportMessageFactory
 import com.apollographql.apollo3.network.sse.SseTransportMessageFactory
 
 open class SseServerTransportMessageFactory(private val messageType: SseTransportMessage.MessageType = SseTransportMessage.MessageType())
