@@ -27,6 +27,7 @@ kotlin {
     val jvmMain by getting {
       dependencies {
         api(groovy.util.Eval.x(project, "x.dep.okHttp.okHttp"))
+        implementation("com.google.code.gson:gson:2.9.0") // TODO until kotlinzerialization Json.decodeFromString<SseTransportMessage.Response>(it) is sorted out
       }
     }
 

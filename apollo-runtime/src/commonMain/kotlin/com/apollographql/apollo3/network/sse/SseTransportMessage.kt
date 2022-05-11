@@ -12,15 +12,19 @@ sealed class SseTransportMessage() {
       val acknowledgeResponse: String = "connection_ack",
       val startRequest: String = "start",
       val startResponse: String = "start_response",
-  )
+
+      val stopRequest: String = "stop",
+      val stopResponse: String = "stop_response",
+
+      )
 
   @Serializable
-  data class ClientRequest(
+  data class Request(
       val type: String,
   ) : SseTransportMessage()
 
   @Serializable
-  data class ClientResponse(
+  data class Response(
       val type: String,
   ) : SseTransportMessage()
 }

@@ -2,6 +2,7 @@ package com.apollographql.apollo.sample.server.routing
 
 import com.apollographql.apollo.sample.server.sse.SseSideChannelInteractor
 import com.apollographql.apollo3.network.sse.SseTransportMessage
+import com.google.gson.Gson
 import io.ktor.application.call
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
@@ -19,12 +20,14 @@ class SseSideChannelRouter(private val interactor: SseSideChannelInteractor = Ss
     const val SIDE_CHANNEL_PATH = "v1/subscription"
   }
 
+  private val gson = Gson() // TODO remove gson
+
   override fun routing(routing: Routing) {
     routing.post("/$SIDE_CHANNEL_PATH") {
 
       withContext(Dispatchers.IO) {
         try {
-          call.receive<SseTransportMessage.ClientRequest>()
+          call.receive<SseTransportMessage.Request>()
               .let { interactor.processRequest(it) }
               .let { serialize(it) }
               .let {
@@ -44,10 +47,10 @@ class SseSideChannelRouter(private val interactor: SseSideChannelInteractor = Ss
     }
   }
 
-  private fun serialize(response: SseTransportMessage.ClientResponse): String {
+  private fun serialize(response: SseTransportMessage.Response): String {
 
-    return Json.encodeToString(response)
-
+//    return Json.encodeToString(response)
+    return gson.toJson(response)
   }
 
 }

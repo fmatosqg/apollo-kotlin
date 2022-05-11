@@ -9,7 +9,7 @@ class SseSideChannelInteractor(
     private val messageType: SseTransportMessage.MessageType = SseTransportMessage.MessageType(),
     private val sseTransportMessageFactory: SseServerTransportMessageFactory = SseServerTransportMessageFactory(),
 ) {
-  fun processRequest(request: SseTransportMessage.ClientRequest): SseTransportMessage.ClientResponse {
+  fun processRequest(request: SseTransportMessage.Request): SseTransportMessage.Response {
 
     return when (request.type) {
       messageType.initRequest -> sseTransportMessageFactory.setMessageToAck()
