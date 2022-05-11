@@ -30,8 +30,10 @@ open class KtorTest {
 
   @Before
   fun setup() {
-    job = CoroutineScope(Dispatchers.IO).launch {
-          KtorServerInteractor(port = port).invoke()
+    job = CoroutineScope(Dispatchers.IO)
+        .launch {
+          KtorServerInteractor(port = port)
+              .invoke()
         }
 
     runBlocking {
@@ -49,9 +51,12 @@ open class KtorTest {
 
     val client = OkHttpClient.Builder().build()
 
-    val request = Request.Builder().url("$sideChannelUrl/${HelloWorldRouter.PATH_HELLO_WORLD}").build()
+    val request = Request.Builder()
+        .url("$sideChannelUrl/${HelloWorldRouter.PATH_HELLO_WORLD}").build()
 
-    client.newCall(request).execute().let {
+    client.newCall(request)
+        .execute()
+        .let {
           Assert.assertEquals(200, it.code)
           Assert.assertEquals(HelloWorldRouter.PAYLOAD_HELLO_WORLD, it.body?.string())
         }

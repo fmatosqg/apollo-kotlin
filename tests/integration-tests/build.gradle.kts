@@ -28,7 +28,7 @@ kotlin {
     val commonTest by getting {
       dependencies {
         implementation(groovy.util.Eval.x(project, "x.dep.kotlin.coroutines"))
-        implementation(groovy.util.Eval.x(project, "x.dep.kotlinxserializationjson").toString()) {
+        implementation(groovy.util.Eval.x(project, "x.dep.kotlinxserialization.json").toString()) {
           because("OperationOutputTest uses it to check the json and we can't use moshi since it's mpp code")
         }
       }

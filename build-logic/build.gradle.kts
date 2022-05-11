@@ -34,6 +34,7 @@ dependencies {
   implementation(groovy.util.Eval.x(project, "x.dep.benManesVersions"))
   implementation(groovy.util.Eval.x(project, "x.dep.vespene"))
   implementation(groovy.util.Eval.x(project, "x.dep.gr8"))
+  implementation(groovy.util.Eval.x(project, "x.dep.kotlinxserialization.plugin"))
 
   // We want the KSP plugin to use the version from the classpath and not force a newer version
   // of the Gradle plugin

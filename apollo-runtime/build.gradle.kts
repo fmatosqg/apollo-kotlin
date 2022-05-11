@@ -1,5 +1,6 @@
 plugins {
   kotlin("multiplatform")
+  kotlin("plugin.serialization")
 }
 
 configureMppDefaults(withLinux = false)
@@ -13,7 +14,7 @@ kotlin {
         api(okio())
         api(groovy.util.Eval.x(project, "x.dep.uuid"))
         api(groovy.util.Eval.x(project, "x.dep.kotlin.coroutines"))
-        implementation(groovy.util.Eval.x(project, "x.dep.kotlinxserializationjson"))
+        implementation(groovy.util.Eval.x(project, "x.dep.kotlinxserialization.json"))
       }
     }
 
@@ -27,7 +28,6 @@ kotlin {
     val jvmMain by getting {
       dependencies {
         api(groovy.util.Eval.x(project, "x.dep.okHttp.okHttp"))
-        implementation("com.google.code.gson:gson:2.9.0") // TODO until kotlinzerialization Json.decodeFromString<SseTransportMessage.Response>(it) is sorted out
       }
     }
 

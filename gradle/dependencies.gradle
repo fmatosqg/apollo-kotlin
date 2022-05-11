@@ -98,7 +98,10 @@ ext.dep = [
     kspGradlePlugin_1_6_21   : "com.google.devtools.ksp:symbol-processing-gradle-plugin:1.6.21-1.0.5",
     kspGradlePlugin_1_6_10   : "com.google.devtools.ksp:symbol-processing-gradle-plugin:1.6.10-1.0.2",
     kotlinxdatetime          : "org.jetbrains.kotlinx:kotlinx-datetime:0.3.1",
-    kotlinxserializationjson : "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2",
+    kotlinxserialization     : [
+        json   : "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2",
+        plugin : "org.jetbrains.kotlin:kotlin-serialization:1.6.21", // TODO find kotlin compiler version
+    ],
     atomicfu                 : "org.jetbrains.kotlinx:atomicfu:0.17.0",
     ktor                     : [
         clientJs      : "io.ktor:ktor-client-js:$versions.ktor",

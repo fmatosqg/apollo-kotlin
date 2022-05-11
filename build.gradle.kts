@@ -13,7 +13,6 @@ buildscript {
   }
   dependencies {
     classpath("com.apollographql.apollo3:build-logic")
-//    classpath(kotlin("serialization", version = "1.6.10")) // TODO do this cleanly
   }
 }
 
